@@ -21,6 +21,7 @@
 <body>
   <script type="module" >
 	  import {Table} from "./src/table_esm.js";
+	  let table3;
 	  window.onload = function () {
    let json_data = `
         [
@@ -87,7 +88,7 @@
 	  table1.init(json_data);
 	  let table2 = new Table("container2");
 	  table2.init(json_data2);
-	  let table3 = new Table("container3");
+	  table3 = new Table("container3");
 	  table3.init(json_data3);
 
 	  //let table3 = new Table("container3");
@@ -96,8 +97,18 @@
 	  //table4.init();
 	  };
                
-  </script>
+document.querySelector("#save").onclick = () => {
+        //let content = table3.editor.getText();
+        let content = table3.editor.getContents(true);
+        console.log(content);
+	/*
+	<p>​<span style="color: rgb(255, 0, 0)"><strong>SunEditor</strong></span>​<br></p>
+	*/
+};
 
+
+  </script>
+  <button id="save">save</button>
 <div class="gp-header">Table Resize in Javascript</div>
 <div class="container" id="container1"></div>
 <br/>

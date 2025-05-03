@@ -371,7 +371,7 @@ row_dragging_over = (e) => {
           td.classList.add("noselect");
           tr.appendChild(td);
            if ( i ==2 && j == 2) {
-              let editor = this.make_editor(td);
+               this.editor = this.make_editor(td);
 	   }
         }
       }

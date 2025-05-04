@@ -50,6 +50,9 @@ export class Table {
     //this.test_json_to_data();
     //this.test_json_to_data2();
     this.td_select_drag_start = false;
+    this.editor = null;       
+    this.editting_td = null;
+
   }
 
 
@@ -366,10 +369,12 @@ row_dragging_over = (e) => {
           th.textContent = table_data[i][j];
           tr.appendChild(th);
         } else {
-          //var td = document.createElement("td");
+          var td = document.createElement("td");
           //td.textContent = table_data[i][j];
-          //td.classList.add("noselect");
-          //tr.appendChild(td);
+          td.innerHTML = table_data[i][j];
+          td.classList.add("noselect");
+          tr.appendChild(td);
+	/*
            if ( i ==1 && j == 2) {
               var td = document.createElement("td");
               td.innerHTML = table_data[i][j];
@@ -391,6 +396,7 @@ row_dragging_over = (e) => {
               tr.appendChild(td);
 
 	   }
+	   */
         }
       }
       table.appendChild(tr);
@@ -712,7 +718,18 @@ row_dragging_over = (e) => {
     this.tds = this.table.querySelectorAll("td");
     this.tds.forEach((td) => {
       //td.removeEventListener("click", null);
-      //td.addEventListener("click", (e) => {
+      td.addEventListener("click", (e) => {
+        if (this.editor != null) {
+	       let content = this.editor.getContents(true);
+               this.editor.destroy()
+               this.editting_td.innerHTML = content;
+               this.editting_td.style.display = "";
+               this.editor = null;       
+               this.editting_td = null;
+	}
+        this.editor = this.make_editor(td);
+        this.editting_td = td;
+      });
       td.removeEventListener("mousedown", null);
       td.addEventListener("mousedown", (e) => {
         console.log("td mousedown", e.button);
@@ -735,6 +752,18 @@ row_dragging_over = (e) => {
         }
         this.select_td[0] = td;
         this.select_td[0].classList.add("selected");
+/*
+        if (this.editor != null) {
+	       let content = this.editor.getContents(true);
+               this.editor.destroy()
+               this.editting_td.innerHTML = content;
+               this.editting_td.style.display = "";
+               this.editor = null;       
+               this.editting_td = null;
+	}
+        this.editor = this.make_editor(td);
+        this.editting_td = td;
+*/
       });
       td.addEventListener("mouseenter", (e) => {
            if (this.td_select_drag_start) {
@@ -1124,23 +1153,25 @@ row_dragging_over = (e) => {
                    //  ('classic', 'inline', 'balloon', 'balloon-always'). default: 'classic' {String}
            
                buttonList: [
-                   ['undo', 'redo'],
-                   ['font', 'fontSize', 'formatBlock'],
-                   ['paragraphStyle', 'blockquote'],
-                   ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                   //['undo', 'redo'],
+                   //['font', 'fontSize', 'formatBlock'],
+                   ['fontSize'],
+                   //['paragraphStyle', 'blockquote'],
+                   //['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                   ['bold', 'underline', 'italic'], 
                    ['fontColor', 'hiliteColor', 'textStyle'],
-                   ['removeFormat'],
-                   '/', // Line break
-                   ['outdent', 'indent'],
+                   //['removeFormat'],
+                   //'/', // Line break
+                   //['outdent', 'indent'],
                    ['align', 'horizontalRule', 'list', 'lineHeight'],
-                   ['table', 'link', 'image', 'video', 'audio' ], // You must add the 'katex' library at options to use the 'math' plugin.
-                   ['fullScreen', 'showBlocks', 'codeView'],
-                   ['preview', 'print'],
-                   ['save', 'template'],
+                   //['table', 'link', 'image', 'video', 'audio' ], // You must add the 'katex' library at options to use the 'math' plugin.
+                   //['fullScreen', 'showBlocks', 'codeView'],
+                   //['preview', 'print'],
+                   //['save', 'template'],
                ],
                resizingBar : false,
                showPathLabel: false,
-               resizeEnable: true,
+               resizeEnable: false,
            })                                                                                                                               
 	   return editor;
   }

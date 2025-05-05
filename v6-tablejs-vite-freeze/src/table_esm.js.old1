@@ -54,7 +54,6 @@ export class Table {
     this.editor = null;       
     this.editting_td = null;
 
-    this.freeze_decoded = { c:2, r:2 };
   }
 
 
@@ -1187,75 +1186,6 @@ row_dragging_over = (e) => {
            })                                                                                                                               
 	   return editor;
   }
-
-  sum_top_height(r) {
-     let height = 0;
-     const offset = 28;
-     for ( let i = 0 ; i < r ; i++) {
-      let tdid = 'td_' + String(i) + '_' + '0';
-      //console.log(tdid);
-      let ele = root.querySelector('#' + tdid);
-      //console.log(ele);
-      if (ele == null) { return 0;}
-      height += ele.clientHeight;
-      //console.log("height",height);
-     }
-     return height + offset;
-  }
-
-  sum_left_width(c) {
-     let width = 0;
-     const offset = 50;
-     for ( let i = 0 ; i < c ; i++) {
-      let tdid = 'td_' + '0' + '_' + String(i);
-      //console.log(tdid);
-      let ele = root.querySelector('#' + tdid);
-      //console.log(ele);
-      if (ele == null) { return 0;}
-      width += ele.clientWidth;
-      //console.log("width",width);
-     }
-     return width + offset;
-  }
-
-  isrFreeze() {
-      return freeze_decoded.c > 0
-  }
-
- freezeStyle_tr(r) {
-     let style = "";
-     if (isrFreeze()) {
-           if ( r < freeze_decoded.r ) {
-                let hight = sum_top_height(r)
-                if ( hight != 0 ) {
-                    //console.log("r", r, hight)
-                    style = `color:blue; position: sticky;  top: ${hight}px;  background: white; z-index: 20; `;
-                }
-           }
-     }
-     return style
-  }
-
-  freezeStyle_td(c,r) {
-     let style = "";
-     if (isrFreeze()) {
-           if ( c < freeze_decoded.c ) {
-                let width = sum_left_width(c)
-                if ( width != 0) {
-                     //console.log("c", c, width)
-                     style += `position: sticky; left: ${width}px; width: 100px;  min-width: 100px;  background: white; z-index:18; `
-                     if ( c == freeze_decoded.c -1) {
-                         style += "border-right: 2px solid green; "
-                     }
-                }
-           }
-           if ( r == freeze_decoded.r -1) {
-                   style += "border-bottom: 2px solid green; "
-           }
-     }
-    return style;
-  }
-
 } // class end
 
 /*

@@ -54,7 +54,7 @@ export class Table {
     this.editor = null;       
     this.editting_td = null;
 
-    this.freeze_decoded = { c:2, r:2 };
+    this.freeze_decoded = { c:0, r:0 };
   }
 
 
@@ -258,6 +258,16 @@ export class Table {
    console.log(array);
   }
 
+  table_json_set_option(json) {
+    let items =JSON.parse(json);
+    if (items[0].freeze) {
+        this.freeze_decoded = items[0].freeze;
+        console.log("freeze",this.freeze_decoded);
+
+    }
+    
+  }
+
   table_json_to_array(json) {
     let items = JSON.parse(json);
     var  index = {};
@@ -409,8 +419,22 @@ row_dragging_over = (e) => {
     this.container.appendChild(table);
   }
 
+  json_syntax_check(json) {
+     try {
+       const data_ = JSON.parse(json);
+     } catch (error) {
+       console.log(error);
+       return false;
+     }
+     return true;
+  }
+
   init(json) {
+    if ( !this.json_syntax_check(json)) {console.log("ERROR", this.container_id);return;}
+    // console.log("OK",this.container_id);
+    //this.json_syntax_check(json)
     this.container = document.getElementById(this.container_id);
+    this.table_json_set_option(json);
     let data = this.table_json_to_array(json);
     this.table_build(data);
 

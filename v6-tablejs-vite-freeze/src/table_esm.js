@@ -435,7 +435,7 @@ row_dragging_over = (e) => {
           let tr = this.table.childNodes[i];
           tr.style = this.freezeStyle_tr(i);
           for ( let j = 0; j < tr.childNodes.length ; j ++) {
-               if (tr.childNodes[j].nodeName == "TH") {
+               if (tr.childNodes[j].nodeName == "TH" || tr.childNodes[j].nodeName == "TD") {
                       tr.childNodes[j].style = this.freezeStyle_td(j,i);
 
                       let new_style = this.freezeStyle_td(j,i);
@@ -446,28 +446,25 @@ row_dragging_over = (e) => {
                            //console.log(split_styles[i]);
                            let param = split_styles[i].split(":");
                            //console.log(param);
-                           s_dict[param[0]] = param[1];
+                           s_dict[param[0].trim()] = param[1].trim();
 		      }
 		      if (Object.keys(s_dict).length > 0)  {
-			      console.log(s_dict);
-		      }
-               }
-               if (tr.childNodes[j].nodeName == "TD") {
-                      tr.childNodes[j].style = this.freezeStyle_td(j,i);
+			      //console.log(s_dict);
+			      for (let key in s_dict) {
+                                  //console.log(key)
+				  let value = s_dict[key]
+                                  if ( key == "position") {
+				  } else if ( key == "left") {
+				  } else if ( key == "background") {
+				  } else if ( key == "z-index") {
+				  } else if ( key == "border-right") {
+				  } else if ( key == "border-bottom") {
+				  } else {
+                                         console.log("not def:", key);
+				  }
+			      }
+		      } 
 
-                      let new_style = this.freezeStyle_td(j,i);
-                      let split_styles = new_style.split(";");
-		      let s_dict = {};
-                      for (let i = 0; i < split_styles.length; i++) {
-                           if (split_styles[i].trim()  == "") { continue;}
-                           //console.log(split_styles[i]);
-                           let param = split_styles[i].split(":");
-                           //console.log(param);
-                           s_dict[param[0]] = param[1];
-		      }
-		      if (Object.keys(s_dict).length > 0)  {
-			      console.log(s_dict);
-		      }
                }
 
 	  }

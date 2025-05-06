@@ -25,6 +25,7 @@
 	  let table2;
 	  let table3;
 	  let table4;
+	  let table5;
 	  window.onload = function () {
    let json_data = `
         [
@@ -164,7 +165,7 @@
         [
            {"index":{"A":"int","B":"int","C":"int","D":"int","E":"int"},
             "title":{"A":"A","B":"B","C":"C","D":"D","E":"E"},
-	    "freeze": { "c": 2, "r":2}
+	    "freeze": { "c": 0, "r":0}
             },
            {"fields":{"A":1,"B":2,"C":3,"D":4,"E":5}
             },
@@ -197,11 +198,11 @@
       for ( let i = 0; i < colm.length; i++) {
               title[colm[i]] = colm[i];
       }
-      //console.log(index);
-      //console.log(title);
-      //console.log(ost(index));
-      //console.log(ost(title));
-      let head = { index: index, title: title}
+      let head = { 
+            index: index, 
+            title: title,
+	    freeze: { c: 0, r:0}
+      }
       data.push(head);
       let ymax = 15;
       for ( let y = 0;  y < ymax ; y++) {
@@ -214,6 +215,9 @@
       }
 	//console.log(ost(data));
 	let json_data4 = ost(data);
+	data[0].freeze = { c:2, r:2};
+	let json_data5 = ost(data);
+
 
 	  table1 = new Table("container1" ,"500px");
 	  table1.init(json_data);
@@ -227,6 +231,11 @@
 
 	  table4 = new Table("container4", "400%");
 	  table4.init(json_data4);
+          table4.table_freeze();
+
+	  table5 = new Table("container5", "400%");
+	  table5.init(json_data5);
+          table5.table_freeze();
 
 	  //let table3 = new Table("container3");
 	  //table3.init();
@@ -248,14 +257,20 @@ document.querySelector("#save").onclick = () => {
         console.log(table2.editting_td);
         table2.editting_td.innerHTML = content;
         table2.editting_td.style.display = "";
-	/*
-	<p>​<span style="color: rgb(255, 0, 0)"><strong>SunEditor</strong></span>​<br></p>
-	*/
 };
 
+document.querySelector("#unfreeze").onclick = () => {
+        table5.unFreeze();
+};
+
+document.querySelector("#onfreeze").onclick = () => {
+        table5.onFreeze();
+};
 
   </script>
   <button id="save">save</button>
+  <button id="unfreeze">unfreeze</button>
+  <button id="onfreeze">onfreeze</button>
 <div class="gp-header">Table Resize in Javascript</div>
 <div class="container" id="container1"></div>
 <br/>
@@ -268,6 +283,11 @@ document.querySelector("#save").onclick = () => {
 <div class="gp-header">4th Table Resize in Javascript</div>
 <div class="wrapper">
 <div class="container-scrollable" id="container4"></div>
+</div>
+<br/>
+<div class="gp-header">5th Table Resize in Javascript</div>
+<div class="wrapper">
+<div class="container-scrollable" id="container5"></div>
 </div>
 <br/>
 <textarea  id="textarea"></textarea>

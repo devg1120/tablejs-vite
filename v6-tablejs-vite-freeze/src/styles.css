@@ -141,7 +141,7 @@ table tr td, table tr th{    word-wrap: break-word; border: 1px solid #000; min-
 
     }
 
-
+/*
 #container4 table tr:nth-child(1)  {
     position: -webkit-sticky;
     position: sticky;
@@ -170,12 +170,11 @@ table tr td, table tr th{    word-wrap: break-word; border: 1px solid #000; min-
 #container4 table th:nth-child(2),
 #container4 table td:nth-child(2) {
     position: sticky;
-    /* 1st cell left/right padding + 1st cell width + 1st cell left/right border width */
-    /* 0 + 5 + 150 + 5 + 1 = 161 */
-    left: 70px;
+    left: 100px;
     width: 100px;
     min-width: 100px;
     background: yellow;
     z-index:100;
 }
 
+*/

@@ -126,8 +126,8 @@ export class Table {
       }
       i++;
     }
-    //console.log(index);
-    //console.log(result);
+    console.log(index);
+    console.log(result);
 
   }
 
@@ -227,7 +227,7 @@ export class Table {
         pk: 484,
       },
     ];
-   //console.log(JSON.stringify(obj))
+   console.log(JSON.stringify(obj))
   }
 
   test_json_to_data2() {
@@ -262,7 +262,7 @@ export class Table {
     let items =JSON.parse(json);
     if (items[0].freeze) {
         this.freeze_decoded = items[0].freeze;
-        console.log(this.container_id,"freeze",this.freeze_decoded);
+        console.log("freeze",this.freeze_decoded);
 
     }
     
@@ -377,7 +377,6 @@ row_dragging_over = (e) => {
        //tr.setattribute("draggable", true)                           // row drag move
        //tr.addeventlistener("dragstart", this.row_dragging_start);
        //tr.addeventlistener("dragover", this.row_dragging_over);
-       //tr.style += this.freezeStyle_tr(i);
       for (var j = 0; j < table_data[0].length; j++) {
         if (i === 0) {
           var th = document.createElement("th");
@@ -420,106 +419,6 @@ row_dragging_over = (e) => {
     this.container.appendChild(table);
   }
 
-  table_freeze(){
-    function style_marge(c_style, freeze_style) {
-        if (freeze_style == "") {
-               // c_style  freeze_style delete
-	} else {
-               // c_style  freeze_styleupdata 
-	}
-    }
-    for ( let i = 0; i <this.table.childNodes.length ; i ++) {
-      if (this.table.childNodes[i].nodeName == "TR") {
-          //console.log("TR",i);
-          //this.table.childNodes[i].style += this.freezeStyle_tr(i);
-          let tr = this.table.childNodes[i];
-          tr.style = this.freezeStyle_tr(i);
-          for ( let j = 0; j < tr.childNodes.length ; j ++) {
-               if (tr.childNodes[j].nodeName == "TH") {
-                      tr.childNodes[j].style = this.freezeStyle_td(j,i);
-
-                      let new_style = this.freezeStyle_td(j,i);
-                      let split_styles = new_style.split(";");
-		      let s_dict = {};
-                      for (let i = 0; i < split_styles.length; i++) {
-                           if (split_styles[i].trim()  == "") { continue;}
-                           //console.log(split_styles[i]);
-                           let param = split_styles[i].split(":");
-                           //console.log(param);
-                           s_dict[param[0]] = param[1];
-		      }
-		      if (Object.keys(s_dict).length > 0)  {
-			      console.log(s_dict);
-		      }
-               }
-               if (tr.childNodes[j].nodeName == "TD") {
-                      tr.childNodes[j].style = this.freezeStyle_td(j,i);
-
-                      let new_style = this.freezeStyle_td(j,i);
-                      let split_styles = new_style.split(";");
-		      let s_dict = {};
-                      for (let i = 0; i < split_styles.length; i++) {
-                           if (split_styles[i].trim()  == "") { continue;}
-                           //console.log(split_styles[i]);
-                           let param = split_styles[i].split(":");
-                           //console.log(param);
-                           s_dict[param[0]] = param[1];
-		      }
-		      if (Object.keys(s_dict).length > 0)  {
-			      console.log(s_dict);
-		      }
-               }
-
-	  }
-    }
-  }
-  }
-
-  table_freeze_old(){
-    for ( let i = 0; i <this.table.childNodes.length ; i ++) {
-      if (this.table.childNodes[i].nodeName == "TR") {
-          //console.log("TR",i);
-          //this.table.childNodes[i].style += this.freezeStyle_tr(i);
-          let tr = this.table.childNodes[i];
-          tr.style = this.freezeStyle_tr(i);
-          for ( let j = 0; j < tr.childNodes.length ; j ++) {
-               if (tr.childNodes[j].nodeName == "TH") {
-                      tr.childNodes[j].style = this.freezeStyle_td(j,i);
-               }
-               if (tr.childNodes[j].nodeName == "TD") {
-                      tr.childNodes[j].style = this.freezeStyle_td(j,i);
-               }
-
-	  }
-    }
-  }
-  }
-
-  table_freeze_(){
-    this.table.childNodes.forEach((c) => {
-      //console.log("nodeName", c.nodeName);
-      if (c.nodeName == "TR") {
-        c.style += this.freezeStyle_tr(i);
-        let id = `TR_${r}`;
-        let d = 0;
-        c.childNodes.forEach((c) => {
-          //console.log("   nodeName", c.nodeName);
-          if (c.nodeName == "TH") {
-            let id = `TH_${r}_${d}`;
-		  console.log(id, c.innerText)
-            d += 1;
-          }
-          if (c.nodeName == "TD") {
-            let id = `TD_${r}_${d}`;
-		  console.log(id, c.innerText)
-            d += 1;
-          }
-        });
-        r += 1;
-      }
-    });
-  }
-
   json_syntax_check(json) {
      try {
        const data_ = JSON.parse(json);
@@ -538,8 +437,6 @@ row_dragging_over = (e) => {
     this.table_json_set_option(json);
     let data = this.table_json_to_array(json);
     this.table_build(data);
-
-    //this.table_freeze();
 
     this.y_cursorStart = 0;
     this.x_cursorStart = 0;
@@ -567,16 +464,10 @@ row_dragging_over = (e) => {
 
     this.container.style.position = "relative";
 
-    //let ele = this.container.querySelector("#TD_1_1" );
-    //let ele = document.querySelector("#container4" );
-    //let ele = this.container.querySelector("#TD_1_1");
-    //console.log("cell", ele);
-
     //this.select_td = null;
     this.select_td = [null,null];
     //this.tds = this.table.querySelectorAll("#table_resize  td");
     this.tds = this.table.querySelectorAll("td");
-    //console.log("tds", this.tds);
 
     this.table.addEventListener("contextmenu", (event) => {
       event.preventDefault();
@@ -1123,8 +1014,10 @@ row_dragging_over = (e) => {
     this.resize = e.target;
     this.resizeCheck = this.resize.classList.contains("x_resize");
     var row_index = parseInt(this.resize.getAttribute("data-resizerow")) - 1;
+	  console.log("row_index", row_index);
     this.row_element = this.table_tr[row_index];
     this.next_row_element = this.table_tr[row_index + 1];
+	  console.log( this.next_row_element);
     this.x_dragStart = true;
     //this.x_cursorStart = this.resizeCheck ? event.pageX : event.pageY;
     this.x_cursorStart = this.resizeCheck ? event.pageY : event.pageX;
@@ -1213,8 +1106,8 @@ row_dragging_over = (e) => {
      document.body.addEventListener("mousemove", this.mouseMove_x);
      document.body.addEventListener("mouseup", this.mouseUp_x);
      var x_resize = this.container.getElementsByClassName("x_resize");
-     //console.log("x_resize",x_resize.length);
-     //console.log("x_resize",typeof(x_resize));
+     console.log("x_resize",x_resize.length);
+     console.log("x_resize",typeof(x_resize));
      for ( let i = 0; i < x_resize.length; i++) {
        x_resize[i].addEventListener("mousedown", this.mouseDown_x);
      }
@@ -1321,20 +1214,14 @@ row_dragging_over = (e) => {
 
   sum_top_height(r) {
      let height = 0;
-     const offset = 0;
+     const offset = 28;
      for ( let i = 0 ; i < r ; i++) {
-      let tdid;
-      if ( i == 0) {
-         tdid = 'TH_' + String(i) + '_' + '0';
-      } else {
-         tdid = 'TD_' + String(i) + '_' + '0';
-      }
+      let tdid = 'td_' + String(i) + '_' + '0';
       //console.log(tdid);
-      let ele = this.table.querySelector('#' + tdid);
-      //let ele = this.container.querySelector('#' + tdid);
+      let ele = root.querySelector('#' + tdid);
       //console.log(ele);
       if (ele == null) { return 0;}
-      height += ele.clientHeight  ;
+      height += ele.clientHeight;
       //console.log("height",height);
      }
      return height + offset;
@@ -1342,48 +1229,32 @@ row_dragging_over = (e) => {
 
   sum_left_width(c) {
      let width = 0;
-     const offset = 0;
+     const offset = 50;
      for ( let i = 0 ; i < c ; i++) {
-      //let tdid = 'TD_' + '0' + '_' + String(i);
-      let tdid = 'TH_' + '0' + '_' + String(i);
+      let tdid = 'td_' + '0' + '_' + String(i);
       //console.log(tdid);
-      let ele = this.table.querySelector('#' + tdid);
+      let ele = root.querySelector('#' + tdid);
+      //console.log(ele);
       if (ele == null) { return 0;}
-      width += ele.clientWidth  ;
-
+      width += ele.clientWidth;
       //console.log("width",width);
      }
      return width + offset;
   }
 
   isrFreeze() {
-      return this.freeze_decoded.c > 0
-  }
-
-  unFreeze() {
-      console.log("unFreeze");
-      this.freeze_decoded = { c:0, r:0};
-      this.table_freeze();
-  }
-
-  onFreeze() {
-      console.log("onFreeze");
-      this.freeze_decoded = { c:3, r:3};
-      this.table_freeze();
+      return freeze_decoded.c > 0
   }
 
  freezeStyle_tr(r) {
      let style = "";
-     if (this.isrFreeze()) {
-           if ( r < this.freeze_decoded.r ) {
-		   //console.log("freezeStyle_tr",r);
-                let tophight = this.sum_top_height(r) ;
-                //if ( tophight != 0 ) {
-                    style = `position: -webkit-sticky; position: sticky;  top: ${tophight}px;  background: white; z-index: 105; `;
-                //}
-           }
-           if ( r == this.freeze_decoded.r -1) {
-                   style += "border-bottom: 2px solid green; "
+     if (isrFreeze()) {
+           if ( r < freeze_decoded.r ) {
+                let hight = sum_top_height(r)
+                if ( hight != 0 ) {
+                    //console.log("r", r, hight)
+                    style = `color:blue; position: sticky;  top: ${hight}px;  background: white; z-index: 20; `;
+                }
            }
      }
      return style
@@ -1391,19 +1262,18 @@ row_dragging_over = (e) => {
 
   freezeStyle_td(c,r) {
      let style = "";
-     if (this.isrFreeze()) {
-           if ( c < this.freeze_decoded.c ) {
-		//console.log("freezeStyle_td",c, r);
-                let leftwidth = this.sum_left_width(c)
-                //if ( leftwidth != 0) {
-                     //style += `position: -webkit-sticky; position: sticky; left: ${leftwidth}px; width: 100px;  min-width: 100px;  background: white; z-index:100; `
-                     style += `position: -webkit-sticky; position: sticky; left: ${leftwidth}px;   background: white; z-index:100; `
-                     if ( c == this.freeze_decoded.c -1) {
+     if (isrFreeze()) {
+           if ( c < freeze_decoded.c ) {
+                let width = sum_left_width(c)
+                if ( width != 0) {
+                     //console.log("c", c, width)
+                     style += `position: sticky; left: ${width}px; width: 100px;  min-width: 100px;  background: white; z-index:18; `
+                     if ( c == freeze_decoded.c -1) {
                          style += "border-right: 2px solid green; "
                      }
-                //}
+                }
            }
-           if ( r == this.freeze_decoded.r -1) {
+           if ( r == freeze_decoded.r -1) {
                    style += "border-bottom: 2px solid green; "
            }
      }
@@ -1648,12 +1518,11 @@ let editor = suneditor.create('textarea', {
     resizeEnable: true,
 })                                                                                                                               
 
-/*
+
     let c = document.querySelector("#container3");
     let t = c.querySelector("#TD_1_0");
 console.log(c);
 console.log(t);
-*/
 /*
 let editor2 = suneditor.create(t, {
     plugins: plugins,

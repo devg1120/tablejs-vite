@@ -434,11 +434,10 @@ row_dragging_over = (e) => {
           //this.table.childNodes[i].style += this.freezeStyle_tr(i);
           let tr = this.table.childNodes[i];
           //tr.style = this.freezeStyle_tr(i);
-          this.freezeStyle_tr_set(tr, i);
+          this.freezeStyle_tr(tr, i);
           for ( let j = 0; j < tr.childNodes.length ; j ++) {
                if (tr.childNodes[j].nodeName == "TH" || tr.childNodes[j].nodeName == "TD") {
-                      //tr.childNodes[j].style = this.freezeStyle_td(j,i);
-                      this.freezeStyle_td_set(tr.childNodes[j],j,i);
+                      tr.childNodes[j].style = this.freezeStyle_td(j,i);
 /*
                       let new_style = this.freezeStyle_td(j,i);
                       let split_styles = new_style.split(";");
@@ -1372,48 +1371,21 @@ row_dragging_over = (e) => {
   }
 
  freezeStyle_tr_set(tr, r) {
+     let style = "";
      if (this.isrFreeze()) {
            if ( r < this.freeze_decoded.r ) {
                 let tophight = this.sum_top_height(r) ;
-		tr.style.position = "sticky";
+                //style = `position: -webkit-sticky; position: sticky;  top: ${tophight}px;  background: white; z-index: 105; `;
+		tr.style.position = "-webkit-sticky";
 		tr.style.top = `${tophight}px`;
-		tr.style.background = "white";
-		tr.style.zIndex = 105;
+		tr.style.backgrund = "white";
+		tr.style.zIndex = "105";
+
            }
            if ( r == this.freeze_decoded.r -1) {
+                //   style += "border-bottom: 2px solid green; "
 		tr.style.borderBottom = "2px solid green";
            }
-     } else {
-	tr.style.position = "";
-	tr.style.top = "";
-	tr.style.background = "";
-	tr.style.zIndex = 0;
-	tr.style.borderBottom = "";
-     }
-  }
-
-  freezeStyle_td_set(td, c,r) {
-     if (this.isrFreeze()) {
-           if ( c < this.freeze_decoded.c ) {
-                let leftwidth = this.sum_left_width(c)
-		     td.style.position = "sticky";
-		     td.style.left = `${leftwidth}px`;
-		     td.style.background = "white";
-		     td.style.zIndex = 100;
-                     if ( c == this.freeze_decoded.c -1) {
-		         td.style.borderRight = "2px solid green";
-                     }
-           }
-           if ( r == this.freeze_decoded.r -1) {
-		td.style.borderBottom = "2px solid green";
-           }
-     } else {
-        td.style.position = "";
-        td.style.left = "";
-	td.style.background = "";
-	td.style.zIndex = 0;
-	td.style.borderRight = "";
-	td.style.borderBottom = "";
      }
   }
 

@@ -433,13 +433,11 @@ row_dragging_over = (e) => {
           //console.log("TR",i);
           //this.table.childNodes[i].style += this.freezeStyle_tr(i);
           let tr = this.table.childNodes[i];
-          //tr.style = this.freezeStyle_tr(i);
-          this.freezeStyle_tr_set(tr, i);
+          tr.style = this.freezeStyle_tr(i);
           for ( let j = 0; j < tr.childNodes.length ; j ++) {
                if (tr.childNodes[j].nodeName == "TH" || tr.childNodes[j].nodeName == "TD") {
-                      //tr.childNodes[j].style = this.freezeStyle_td(j,i);
-                      this.freezeStyle_td_set(tr.childNodes[j],j,i);
-/*
+                      tr.childNodes[j].style = this.freezeStyle_td(j,i);
+
                       let new_style = this.freezeStyle_td(j,i);
                       let split_styles = new_style.split(";");
 		      let s_dict = {};
@@ -466,7 +464,7 @@ row_dragging_over = (e) => {
 				  }
 			      }
 		      } 
-*/
+
                }
 
 	  }
@@ -1369,52 +1367,6 @@ row_dragging_over = (e) => {
       console.log("onFreeze");
       this.freeze_decoded = { c:3, r:3};
       this.table_freeze();
-  }
-
- freezeStyle_tr_set(tr, r) {
-     if (this.isrFreeze()) {
-           if ( r < this.freeze_decoded.r ) {
-                let tophight = this.sum_top_height(r) ;
-		tr.style.position = "sticky";
-		tr.style.top = `${tophight}px`;
-		tr.style.background = "white";
-		tr.style.zIndex = 105;
-           }
-           if ( r == this.freeze_decoded.r -1) {
-		tr.style.borderBottom = "2px solid green";
-           }
-     } else {
-	tr.style.position = "";
-	tr.style.top = "";
-	tr.style.background = "";
-	tr.style.zIndex = 0;
-	tr.style.borderBottom = "";
-     }
-  }
-
-  freezeStyle_td_set(td, c,r) {
-     if (this.isrFreeze()) {
-           if ( c < this.freeze_decoded.c ) {
-                let leftwidth = this.sum_left_width(c)
-		     td.style.position = "sticky";
-		     td.style.left = `${leftwidth}px`;
-		     td.style.background = "white";
-		     td.style.zIndex = 100;
-                     if ( c == this.freeze_decoded.c -1) {
-		         td.style.borderRight = "2px solid green";
-                     }
-           }
-           if ( r == this.freeze_decoded.r -1) {
-		td.style.borderBottom = "2px solid green";
-           }
-     } else {
-        td.style.position = "";
-        td.style.left = "";
-	td.style.background = "";
-	td.style.zIndex = 0;
-	td.style.borderRight = "";
-	td.style.borderBottom = "";
-     }
   }
 
  freezeStyle_tr(r) {

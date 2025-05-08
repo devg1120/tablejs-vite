@@ -1109,6 +1109,7 @@ row_dragging_over = (e) => {
     //console.log(this.container_id, "mouseUp");
     if (this.y_dragStart) {
       this.y_dragStart = false;
+      this.table_freeze();
     }
     if ( this.td_select_drag_start) {
        this.td_select_drag_start = false;
@@ -1169,6 +1170,7 @@ row_dragging_over = (e) => {
     if (this.x_dragStart) {
       this.x_dragStart = false;
       this.resetResizeRowDiv()
+      this.table_freeze();
     }
     if ( this.td_select_drag_start) {
        this.td_select_drag_start = false;
